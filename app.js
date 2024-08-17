@@ -35,6 +35,7 @@ const won = new Audio("audio/won.mp3")
 
 //Event listener to startgame
 startGame.addEventListener('click' , function () {
+    let winnerImage = document.getElementById("winnerImage");
     //remove start button
     startGame.style.display = "none"
     dancingAlien.style.display = "none"
@@ -43,7 +44,6 @@ startGame.addEventListener('click' , function () {
     // fire button and aliens appear
     battleStats.style.display ="flex"
     fireBtn.style.display = "flex";
-
     alien.forEach(alien => {
         alien.style.display = 'flex';
     });
@@ -51,71 +51,66 @@ startGame.addEventListener('click' , function () {
     //display stat info of fighter and selected alien
     let fighterStat = document.getElementById('fighterStat')
     let fighterHull = document.createElement('p')
-    fighterHull.innerText = "Hull: " + fighter_.hull
-    fighterHull.style.color = "red"
+    fighterHull.textContent = "Hull: " + fighter_.hull
     fighterStat.appendChild(fighterHull)
     let fighterFirepower =document.createElement('p')
-    fighterFirepower.innerText = "Firepower: 5" 
+    fighterFirepower.textContent = "Firepower: 5" 
     fighterStat.appendChild(fighterFirepower)
     let fighterAccuracy = document.createElement('p')
-    fighterAccuracy.innerText ="Accuracy: 0.7"
+    fighterAccuracy.textContent ="Accuracy: 0.7"
     fighterStat.appendChild(fighterAccuracy)
     //selected alien
     let alienStat = document.getElementById('alienStat')
     let alienHull = document.createElement('p')
-    alienHull.innerText = "Hull: " + alienShip[0].hull
+    alienHull.textContent = "Hull: " + alienShip[0].hull
     alienStat.appendChild(alienHull)
-    alienHull.style.color = "red"
     let alienFirepower =document.createElement('p')
-    alienFirepower.innerText = "Firepower: " + alienShip[0].firepower
+    alienFirepower.textContent = "Firepower: " + alienShip[0].firepower
     alienStat.appendChild(alienFirepower)
     let alienAccuracy = document.createElement('p')
-    alienAccuracy.innerText ="Accuracy: " + alienShip[0].accuracy
+    alienAccuracy.textContent ="Accuracy: " + alienShip[0].accuracy
     alienStat.appendChild(alienAccuracy)
     //event listener to fire
     fireBtn.addEventListener("click" , function (event) {
         //fighter attacks first
-        fighterSound.play()
-
-
         if (fighter_.hull > 0){
             if (Math.random() < 0.7) {
+                fighterSound.play()
                 alienShip[0].hull -= 5;
-                alert('You hit the target! Alien1 hull: ' + alienShip[0].hull);
+                displayDamage.textContent = 'You hit the target! Alien1 hull: ' + alienShip[0].hull
 
                 if (alienShip[0].hull <= 0){
-                    //removed destroyed alien in the array
-
+                    //removed destroyed alien in the array & display
+                    let alienDefeated = document.querySelector(".alien")
+                    alienContainer.removeChild(alienDefeated)
                     alienShip.shift();
                     alert('Alien destroyed! Number of aliens left:' + alienShip.length)
                             //to determine if there's alien left
                             if (alienShip.length === 0) {
                                 won.play();
-                                alert('All aliens have been defeated. You won!');
+                                winnerImage.style.display = "flex"
                                 fireBtn.style.display = 'none';
                                 setTimeout(() => {
                                     location.reload();
-                                }, 1500);
+                                }, 3000);
                             }
                     //update alienStat of new alien
-                    alienHull.innerText = "Hull: " + alienShip[0].hull
+                    alienHull.textContent = "Hull: " + alienShip[0].hull
                     alienStat.appendChild(alienHull)
-                    alienFirepower.innerText = "Firepower: " + alienShip[0].firepower
+                    alienFirepower.textContent = "Firepower: " + alienShip[0].firepower
                     alienStat.appendChild(alienFirepower)
-                    alienAccuracy.innerText ="Accuracy: " + alienShip[0].accuracy
+                    alienAccuracy.textContent ="Accuracy: " + alienShip[0].accuracy
                     alienStat.appendChild(alienAccuracy)
                     //ask user to play more
                     fireBtn.style.display = "none"
                     let playMore = document.createElement('button')
-                    playMore.innerText = "Play More"
-                    // playMore.style.backgroundColor = "red"
+                    playMore.textContent = "Play More"
                     playMore.style.border = "1px solid lime"
                     playMore.className = "choose"
                     control.appendChild(playMore)
                     let retreat = document.createElement('button')
                     control.appendChild(retreat)
-                    retreat.innerText = "Retreat"
-                    // retreat.style.backgroundColor = "red"
+                    retreat.textContent = "Retreat"
                     retreat.style.border= "1px solid lime"
                     retreat.className = "choose"
                     playMore.onclick = () => {
@@ -128,7 +123,7 @@ startGame.addEventListener('click' , function () {
                         alert("Game over!")
                         setTimeout(() => {
                             location.reload();
-                        }, 1500);
+                        }, 2000);
                     }
                     
                 } else {
@@ -137,12 +132,14 @@ startGame.addEventListener('click' , function () {
                 }
 
             } else {
+                fighterSound.play()
                 alert("You missed! Alien hull:" + alienShip[0].hull);
                 //alien attacks
-                alienSound.play();
                 if (Math.random() < alienShip[0].accuracy){
+                    alienSound.play();
                     fighter_.hull -= alienShip[0].firepower
-                    fighterHull.innerText = "Hull: " + fighter_.hull
+                    fighterHull.textContent = "Hull: " + fighter_.hull
+                    fighterHull.style.color = "red"
                     alert('Alien hit your ship: Fighter hull' + fighter_.hull )
                 } else {
                     alert('Alien shoot bad')
@@ -154,25 +151,27 @@ startGame.addEventListener('click' , function () {
         alert("You lost! Aliens won")
         setTimeout(() => {
             location.reload();
-        }, 1500);
+        }, 2000);
     }
 })
 })
 
 function alienAttack () {
-    alienSound.play();
     if (Math.random() < alienShip[0].accuracy){
+        alienSound.play();
         fighter_.hull -= alienShip[0].firepower
-        fighterHull.innerText = "Hull: " + fighter_.hull
+        fighterHull.textContent = "Hull: " + fighter_.hull
+        fighterHull.style.color = "red"
         alert('Alien hit your ship: Fighter hull' + fighter_.hull )
         if (fighter_.hull <= 0 ){
             gameover.play()
             alert("You lost! Aliens won")
             setTimeout(() => {
                 location.reload();
-            }, 1500);
+            }, 2000);
         }
     } else {
+        alienSound.play()
         alert('Alien shoot bad')
     }
 }
