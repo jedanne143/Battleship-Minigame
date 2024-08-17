@@ -47,7 +47,7 @@ startGame.addEventListener('click' , function () {
     alien.forEach(alien => {
         alien.style.display = 'flex';
     });
-    alert("Game Began\n Use fire button to defeat the aliens")
+    displayDamage.textContent = "Game has begun. Use the fire button to defeat the aliens"
     //display stat info of fighter and selected alien
     let fighterStat = document.getElementById('fighterStat')
     let fighterHull = document.createElement('p')
@@ -77,14 +77,16 @@ startGame.addEventListener('click' , function () {
             if (Math.random() < 0.7) {
                 fighterSound.play()
                 alienShip[0].hull -= 5;
-                displayDamage.textContent = 'You hit the target! Alien1 hull: ' + alienShip[0].hull
+                displayDamage.style.color = "beige"
+                displayDamage.textContent = 'You hit the target! Alien hull: ' + alienShip[0].hull
 
                 if (alienShip[0].hull <= 0){
                     //removed destroyed alien in the array & display
                     let alienDefeated = document.querySelector(".alien")
                     alienContainer.removeChild(alienDefeated)
                     alienShip.shift();
-                    alert('Alien destroyed! Number of aliens left:' + alienShip.length)
+                    displayDamage.style.color = "beige"
+                    displayDamage.textContent = 'Alien destroyed! Number of aliens left:' + alienShip.length
                             //to determine if there's alien left
                             if (alienShip.length === 0) {
                                 won.play();
@@ -123,38 +125,46 @@ startGame.addEventListener('click' , function () {
                         alert("Game over!")
                         setTimeout(() => {
                             location.reload();
-                        }, 2000);
+                        }, 3000);
                     }
                     
                 } else {
                 //alien survived the fighters attack. It fires back
-                alienAttack() 
+                setTimeout(() => {alienAttack} , 2000)
                 }
 
             } else {
                 fighterSound.play()
-                alert("You missed! Alien hull:" + alienShip[0].hull);
+                displayDamage.style.color = "red"
+                displayDamage.textContent = "You missed!"
                 //alien attacks
-                if (Math.random() < alienShip[0].accuracy){
-                    alienSound.play();
-                    fighter_.hull -= alienShip[0].firepower
-                    fighterHull.textContent = "Hull: " + fighter_.hull
-                    fighterHull.style.color = "red"
-                    alert('Alien hit your ship: Fighter hull' + fighter_.hull )
-                } else {
-                    alert('Alien shoot bad')
-                }
+                setTimeout(() => {
+                    if (Math.random() < alienShip[0].accuracy){
+                        alienSound.play();
+                        fighter_.hull -= alienShip[0].firepower
+                        fighterHull.textContent = "Hull: " + fighter_.hull
+                        fighterHull.style.color = "red"
+                        displayDamage.style.color = "red"
+                        displayDamage.textContent= 'The alien hit your ship!'
+                    } else {
+                        alienSound.play();
+                        displayDamage.style.color = "beige"
+                        displayDamage.textContent = 'The alien counter fired, but missed its shot'
+                    } 
+                } , 2000)
                 
             }
     } else {
         gameover.play()
-        alert("You lost! Aliens won")
+        displayDamage.style.color = "red"
+        displayDamage.textContent = "You lost! Aliens won"
         setTimeout(() => {
             location.reload();
-        }, 2000);
+        }, 3000);
     }
 })
 })
+//------------------------------------------------------------------------------//
 
 function alienAttack () {
     if (Math.random() < alienShip[0].accuracy){
@@ -162,7 +172,8 @@ function alienAttack () {
         fighter_.hull -= alienShip[0].firepower
         fighterHull.textContent = "Hull: " + fighter_.hull
         fighterHull.style.color = "red"
-        alert('Alien hit your ship: Fighter hull' + fighter_.hull )
+        displayDamage.style.color = "red"
+        displayDamage.textContent = 'The alien hit your ship!'
         if (fighter_.hull <= 0 ){
             gameover.play()
             alert("You lost! Aliens won")
@@ -172,7 +183,8 @@ function alienAttack () {
         }
     } else {
         alienSound.play()
-        alert('Alien shoot bad')
+        displayDamage.style.color = "beige"
+        displayDamage.textContent = 'The alien counter fired, but missed its shot'
     }
 }
 

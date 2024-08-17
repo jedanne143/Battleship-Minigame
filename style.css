@@ -148,6 +148,9 @@
     color: bisque;
     text-align:center;
     margin: 20px;
+    text-wrap: wrap;
+    flex-wrap: wrap;
+    overflow: hidden;
 }
 #startGame{
     width: 100px;
