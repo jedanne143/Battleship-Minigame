@@ -93,7 +93,9 @@ startGame.addEventListener('click' , function () {
                                 won.play();
                                 alert('All aliens have been defeated. You won!');
                                 fireBtn.style.display = 'none';
-                                location.reload(); 
+                                setTimeout(() => {
+                                    location.reload();
+                                }, 1500);
                             }
                     //update alienStat of new alien
                     alienHull.innerText = "Hull: " + alienShip[0].hull
@@ -122,8 +124,11 @@ startGame.addEventListener('click' , function () {
                         fireBtn.style.display = "flex"
                     }
                     retreat.onclick = () => {
+                        gameover.play()
                         alert("Game over!")
-                        location.reload(); 
+                        setTimeout(() => {
+                            location.reload();
+                        }, 1500);
                     }
                     
                 } else {
@@ -147,7 +152,9 @@ startGame.addEventListener('click' , function () {
     } else {
         gameover.play()
         alert("You lost! Aliens won")
-        location.reload(); 
+        setTimeout(() => {
+            location.reload();
+        }, 1500);
     }
 })
 })
@@ -161,7 +168,9 @@ function alienAttack () {
         if (fighter_.hull <= 0 ){
             gameover.play()
             alert("You lost! Aliens won")
-            location.reload(); 
+            setTimeout(() => {
+                location.reload();
+            }, 1500);
         }
     } else {
         alert('Alien shoot bad')
