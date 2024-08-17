@@ -26,6 +26,10 @@ let alienContainer = document.getElementById('alienContainer')
 let control = document.getElementById('control')
 let battleStats = document.getElementById('battleStats')
 let dancingAlien = document.getElementById('dancingAlien')
+
+//audio files
+const fighterSound = new Audio("audio/fighterF.mp3")
+const alienSound = new Audio("audio/alienF.mp3")
 //Event listener to startgame
 startGame.addEventListener('click' , function () {
     //remove start button
@@ -67,6 +71,13 @@ startGame.addEventListener('click' , function () {
     //event listener to fire
     fireBtn.addEventListener("click" , function (event) {
         //fighter attacks first
+        fighterSound.play()
+        
+        if (alienShip.length === 0) {
+            alert('All aliens have been defeated. You won!');
+            fireBtn.style.display = 'none';
+            location.reload(); 
+        }
         if (fighter_.hull > 0){
             if (Math.random() < 0.7) {
                 alienShip[0].hull -= 5;
@@ -120,6 +131,7 @@ startGame.addEventListener('click' , function () {
 
             } else {
                 alert("You missed! Alien hull:" + alienShip[0].hull);
+                alienSound.play();
                 if (Math.random() < alienShip[0].accuracy){
                     fighter_.hull -= alienShip[0].firepower
                     fighterHull.innerText = "Hull: " + fighter_.hull
@@ -137,6 +149,7 @@ startGame.addEventListener('click' , function () {
 })
 
 function alienAttack () {
+    alienSound.play();
     if (Math.random() < alienShip[0].accuracy){
         fighter_.hull -= alienShip[0].firepower
         fighterHull.innerText = "Hull: " + fighter_.hull
