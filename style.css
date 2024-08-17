@@ -82,20 +82,34 @@
     height: 30px;
     border: 1px solid red;
     border-radius: 10px;
-    box-shadow: 4px 4px;
+    box-shadow: 4px 4px lime;
     text-align: center;
     justify-items: center;
-    background-color: rgb(217, 123, 123);
+    background-color: red;
+    color: bisque
     
 }
-
-#control button{
+#fireBtn:active{
+    display: flex;  
+    width: 80px;
+    height: 30px;
+    border: 1px solid red;
+    border-radius: 10px;
+    box-shadow: 1px 1px lime;
+    text-align: center;
+    justify-items: center;
+    background-color: red;
+    color: bisque
+    
+}
+.choose{
     width:80px;
     height:30px;
-    background-color: rgb(217, 123, 123);
+    background-color: red;
     border-radius: 10px;
     margin: 10px;
     text-align: center;
+    color: bisque
 }
 #battleStats{
     display: none; 
@@ -126,10 +140,13 @@
     margin-right: 20px;
 }
 #displayDamage{
+    display: flex;
     width: 100%;
     height: 300px;
     border: 1px 1px solid red;
-  
+    color: bisque;
+    text-align:center;
+    margin: 20px;
 }
 #startGame{
     width: 100px;
