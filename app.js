@@ -88,7 +88,7 @@ startGame.addEventListener('click' , function () {
                                 fireBtn.style.display = 'none';
                                 setTimeout(() => {
                                     location.reload();
-                                }, 3000);
+                                }, 2000);
                             }
                     //update alienStat of new alien
                     alienHull.textContent = "Hull: " + alienShip[0].hull
@@ -119,7 +119,7 @@ startGame.addEventListener('click' , function () {
                         alert("Game over!")
                         setTimeout(() => {
                             location.reload();
-                        }, 3000);
+                        }, 2000);
                     }
                 } else {
                 //alien survived the fighters attack. It fires back
@@ -130,15 +130,15 @@ startGame.addEventListener('click' , function () {
                 alienStat.appendChild(alienFirepower)
                 alienAccuracy.textContent ="Accuracy: " + alienShip[0].accuracy
                 alienStat.appendChild(alienAccuracy)
-                fighter.style.transform = "scale(1)"
-                setTimeout(() => {alienAttack} , 2000)
+                fighter.style.transform = "scale(1)";
+                setTimeout(() => { alienAttack } , 2000)
                 }
 
             } else {
                 fighter.style.transform = "scale(1.4)"
                 fighterSound.play()
                 displayDamage.style.color = "red"
-                displayDamage.textContent = "You missed!"
+                displayDamage.textContent = "You missed!";
                 //alien attacks
                 setTimeout(() => {
                     fighter.style.transform = "scale(1)"
