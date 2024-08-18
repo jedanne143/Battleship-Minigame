@@ -62,10 +62,9 @@ startGame.addEventListener('click' , function () {
     let alienAccuracy = document.createElement('p')
     alienAccuracy.textContent ="Accuracy: " + alienShip[0].accuracy
     alienStat.appendChild(alienAccuracy)
-    //event listener to fire
+    //event listener to fire 
     fireBtn.addEventListener("click" , function (event) {
         //fighter attacks first
-        if (fighter_.hull > 0){
             if (Math.random() < 0.7) {
                 fighter.style.transform = "scale(1.4)"
                 fighterSound.play()
@@ -157,15 +156,6 @@ startGame.addEventListener('click' , function () {
                     } 
                 } , 2000)
             }
-    } else {
-        gameover.play()
-        fighter.style.transform = "scale(1)"
-        displayDamage.style.color = "red"
-        displayDamage.textContent = "You lost! Aliens won"
-        setTimeout(() => {
-            location.reload();
-        }, 3000);
-    }
 })
 })
 //------------------------------------------------------------------------------//
